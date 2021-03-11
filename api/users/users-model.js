@@ -4,7 +4,7 @@ const db = require("../../data/db-config")
   resolves to an ARRAY with all users, each user having { user_id, username }
  */
 function find() {
-    return db("users").select("id", "username")
+    return db("users").select("user_id", "username")
 }
 
 /**
@@ -12,7 +12,7 @@ function find() {
  */
 function findBy(filter) {
     return db("users")
-    .select("id", "username", "password")
+    .select("user_id", "username", "password")
     .where(filter)
 }
 
@@ -20,18 +20,18 @@ function findBy(filter) {
   resolves to the user { user_id, username } with the given user_id
  */
 function findById(user_id) {
-return ("users")
-.select("id", "username")
-.where({ id })
+return db("users")
+.select("user_id", "username")
+.where({ user_id })
 .first()
 }
 
 /**
   resolves to the newly inserted user { user_id, username }
  */
-function add(user) {
-const [id] = await db("users").insert(user)
-return findById(id)
+ async function  add(user) {
+const [user_id] = await db("users").insert(user)
+return findById(user_id)
 }
 
 // Don't forget to add these to the `exports` object so they can be required in other modules
